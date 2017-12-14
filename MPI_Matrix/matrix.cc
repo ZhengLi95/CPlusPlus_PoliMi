@@ -58,7 +58,7 @@ namespace la{
         }
         size_t counter = 0;
         for (size_t i = 0; i < m_data.size(); i++){
-            std::cout << m_data[i] << " ";
+            std::cout << m_data[i] << " " << std::flush;
             counter++;
             if (counter >= m_cols){
                 std::cout << std::endl;
@@ -71,9 +71,9 @@ namespace la{
     void Matrix::print_vector(const std::vector<T> & current_vec) const{
         size_t sz = current_vec.size();
         if (sz >= 2){
-            std::cout << "[" << current_vec[0] << ", ";
+            std::cout << "[" << current_vec[0] << ", " << std::flush;
             for (size_t i = 1; i < sz - 1; i++){
-                std::cout << current_vec[i] << ", ";           
+                std::cout << current_vec[i] << ", " << std::flush;           
             }
             std::cout << current_vec[sz - 1] << "]" << std::endl;
         }

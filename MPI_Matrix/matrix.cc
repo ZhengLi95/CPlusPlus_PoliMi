@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <fstream>
 #include <utility>
 
 namespace la{
@@ -11,8 +12,7 @@ namespace la{
         m_rows = row;
         m_cols = col;
         for (size_t i = 0; i < num; i++){
-            //m_data.push_back(init_val);
-            m_data.push_back(i);
+            m_data.push_back(init_val);
         }
     }
 
@@ -33,7 +33,28 @@ namespace la{
         }
         else{
             throw std::range_error("The size of Matrix must >= 1 * 1");
+        }    
+    }
+    
+    Matrix::Matrix(const std::string & file_name){
+        std::ifstream input;
+        input.open(file_name);
+        if (input.is_open()){
+            input >> m_rows >> m_cols;
+            double temp;
+            while(input >> temp){
+                m_data.push_back(temp);
+            }
+            size_t len = m_rows * m_cols;
+            if (m_data.size() != len){
+                throw std::invalid_argument("Please check if the format of \
+                the matrix in the file is with correct format!");
+            }
         }
+        else{
+            throw std::invalid_argument(file_name + " cannot be opened correctly!");
+        }
+        input.close();
     }
 
     size_t Matrix::pos2seq(const Matrix::m_size &sz){

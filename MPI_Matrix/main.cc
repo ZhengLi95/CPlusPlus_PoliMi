@@ -8,6 +8,8 @@ inline void print_dash(){
 
 int main(int argc, char* argv[]){
     
+    print_dash();
+
     la::Matrix m(2, 3, 5.5);
     m.print(true);
     print_dash();
@@ -26,6 +28,10 @@ int main(int argc, char* argv[]){
 
     la::Matrix d = a + b;
     d.print(true);
+    print_dash();
+
+    la::Matrix f("M");
+    f.print(true);
     print_dash();
 
     return 0;  

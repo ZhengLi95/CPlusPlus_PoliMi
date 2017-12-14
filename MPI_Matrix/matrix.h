@@ -33,6 +33,7 @@ namespace la{
 
         Matrix(const size_t &, const size_t &, const double & = 0.);
         Matrix(const m_size &, const double & = 0.);
+        Matrix(const std::string & file_name);
 
         void read();
         void print(bool with_size= false) const;
@@ -53,4 +54,5 @@ namespace la{
 
     Matrix operator+(const Matrix &lhs, const Matrix &rhs);
     Matrix operator*(const Matrix &lhs, const Matrix &rhs);
+
 }

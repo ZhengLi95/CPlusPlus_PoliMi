@@ -33,7 +33,7 @@ namespace la{
 
         Matrix(const size_t &, const size_t &, const double & = 0.);
         Matrix(const m_size &, const double & = 0.);
-        Matrix(const std::string & file_name);
+        Matrix(const std::string &);
 
         void read();
         void print(bool with_size= false) const;

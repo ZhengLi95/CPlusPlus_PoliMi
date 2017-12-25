@@ -25,18 +25,20 @@ namespace la{
 
         template <typename T>
         void print_vector(const std::vector<T> &) const;
-        void init_matrix(const size_t &, const size_t &, const double & = 0.);\
+        void print_dashline() const;
+        void init_matrix(const size_t &, const size_t &, const double & = 0.);
         
         std::vector<double> operator[](const size_t &r_coor) const;
         
         public:
-
+        
+        Matrix() = default;
         Matrix(const size_t &, const size_t &, const double & = 0.);
         Matrix(const m_size &, const double & = 0.);
         Matrix(const std::string &);
 
-        void read();
-        void print(bool with_size= false) const;
+        void read(const std::string &);
+        void print(bool with_size= false, bool with_dashline= true) const;
 
         double get_val(const size_t &, const size_t &) const;
         double get_val(const size_t &) const;
@@ -45,7 +47,9 @@ namespace la{
 
         m_size size() const;
         size_t get_n_rows() const;
-        size_t get_n_cols() const; 
+        size_t get_n_cols() const;
+        std::vector<double>::pointer get_data();
+        //Matrix::const_pointer get_data const();
         size_t pos2seq(const m_size &);
         size_t pos2seq(const size_t &, const size_t &);       
         m_size seq2pos(const size_t &);   

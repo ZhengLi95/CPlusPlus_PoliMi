@@ -38,6 +38,12 @@ namespace la{
     }
     
     Matrix::Matrix(const std::string & file_name){
+        read(file_name);
+    }
+
+    void Matrix::read(const std::string & file_name){
+        if(m_data.size() != 0)
+            m_data.clear();
         std::ifstream input;
         input.open(file_name);
         if (input.is_open()){
@@ -74,7 +80,10 @@ namespace la{
         return Matrix::m_size(r,c);
     }
 
-    void Matrix::print(bool with_size) const{
+    void Matrix::print(bool with_size, bool with_dashline) const{
+        if(with_dashline){
+            print_dashline();
+        }
         if(with_size == true){
             std::cout << "n_rows: " << m_rows << ", n_cols: " << m_cols << std::endl;
         }
@@ -86,7 +95,19 @@ namespace la{
                 std::cout << std::endl;
                 counter = 0;
             }
-        }      
+        }
+        if(with_dashline){
+            print_dashline();
+        }
+    }
+
+    void Matrix::print_dashline() const{
+        if (m_cols < 10){
+            for(size_t i=0; i < m_cols; i++){
+                std::cout << "------" << std::flush;
+            }
+            std::cout << std::endl;
+        }
     }
 
     template <typename T>
@@ -136,6 +157,10 @@ namespace la{
 
     size_t Matrix::get_n_cols() const{
         return m_cols;
+    }
+
+    std::vector<double>::pointer Matrix::get_data(){
+        return m_data.data();
     }
 
     std::vector<double> Matrix::operator[](const size_t &r_coor) const{

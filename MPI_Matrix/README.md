@@ -4,7 +4,7 @@ In the `matrix.hh` and `matrix.cc` the class of Matrix is created. In the `main.
 a frame for paralleling multiplication of Matrix has been given, and some explains
 of the realization could be found in the code file.
 
-Be attentive that `<mpi.h>` is concluded in `main.cc`, thus **mpi** must be used for compiling,
+Be attentive that **<mpi.h>** is concluded in `main.cc`, thus **the wrapper compiler mpicxx** must be used for compiling.
 
 Compile it as:
 
@@ -14,6 +14,7 @@ Run it as:
 
 `mpiexec -np 5 exe A B`
 
-*You can only create factor-many processes. For example, here we create 5 processes*
-*because 5 is a factor of the number of rows fo A*
+*You can only create factor-many processes.*
+
+*For example, here we create 5 processes because 5 is a factor of the number of rows fo A*
 

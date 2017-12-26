@@ -25,9 +25,11 @@ namespace la{
 
         template <typename T>
         void print_vector(const std::vector<T> &) const;
-        void print_dashline() const;
+        void print_dashline(unsigned) const;
         void init_matrix(const size_t &, const size_t &, const double & = 0.);
-        
+        double find_max() const;
+        unsigned cal_highest_pos(double) const;
+
         std::vector<double> operator[](const size_t &r_coor) const;
         
         public:
@@ -38,7 +40,7 @@ namespace la{
         Matrix(const std::string &);
 
         void read(const std::string &);
-        void print(bool with_size= false, bool with_dashline= true) const;
+        void print(bool with_size= false, bool with_dashline= true, unsigned dig= 2) const;
 
         double get_val(const size_t &, const size_t &) const;
         double get_val(const size_t &) const;
@@ -49,7 +51,7 @@ namespace la{
         size_t get_n_rows() const;
         size_t get_n_cols() const;
         std::vector<double>::pointer get_data();
-        //Matrix::const_pointer get_data const();
+        std::vector<double>::const_pointer get_data() const;
         size_t pos2seq(const m_size &);
         size_t pos2seq(const size_t &, const size_t &);       
         m_size seq2pos(const size_t &);   

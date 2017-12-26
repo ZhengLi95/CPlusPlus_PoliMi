@@ -7,8 +7,13 @@ of the realization could be found in the code file.
 Be attentive that `<mpi.h>` is concluded in `main.cc`, thus **mpi** must be used for compiling,
 
 Compile it as:
+
 `mpicxx -std=c++11 main.cc matrix.cc -o exe`
 
 Run it as:
-`mpiexec -np 5 exe`
+
+`mpiexec -np 5 exe A B`
+
+*You can only create factor-many processes. For example, here we create 5 processes*
+*because 5 is a factor of the number of rows fo A*
 

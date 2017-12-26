@@ -15,8 +15,13 @@ int main(int argc, char* argv[]){
     la::Matrix B;
 
     if (rank == 0){
-        A.read("A");
-        B.read("B");
+        if (argc == 3){
+            A.read(argv[1]);
+            B.read(argv[2]);
+        }
+        else{
+            throw std::invalid_argument("Two files containing the matrix must be supplied!");
+        }
     }
 
     size_t l = A.get_n_rows();
@@ -27,8 +32,8 @@ int main(int argc, char* argv[]){
     MPI_Bcast(&m, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     MPI_Bcast(&n, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-    // Here we must create a local matrix B because in the processes (except 0) we did not
-    // initilize the vector<double> with scale, thus it can not receive the data from process 0
+    // Here we must create a local matrix of the second matrix because in the processes (except 0) we 
+    // did not initilize the vector<double> with scale, thus it can not receive the data from process 0
     la::Matrix loc_B(m, n);
 
     if (rank == 0){
@@ -67,11 +72,17 @@ int main(int argc, char* argv[]){
         s * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
 
+    // Print the final result
     if (rank == 0){
-        C.print(true);
+        std::cout << std::endl << "The matrix " << argv[1] << " is as:" << std::endl; 
+        A.print(true, true, 3);
+        std::cout << std::endl << "The matrix " << argv[2] << " is as:" << std::endl;
+        B.print(true, true, 3);
+        std::cout << std::endl << "The answer of " << argv[1] << " * " << argv[2] << " is as:" << std::endl;
+        C.print(true, true, 3);
     }
     
     MPI_Finalize();   
 
-    return 0;  
+    return 0;
 }

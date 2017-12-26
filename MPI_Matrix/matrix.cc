@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <utility>
-
+#include <iomanip>
 
 namespace la{
 
@@ -80,16 +80,48 @@ namespace la{
         return Matrix::m_size(r,c);
     }
 
-    void Matrix::print(bool with_size, bool with_dashline) const{
+    double Matrix::find_max() const{
+        double max = 0;
+        for (double entry : m_data){
+            if(entry < 0){
+                entry = -entry;
+            }
+            if(entry > max){
+                max = entry;
+            }
+        }
+        return max;
+    }
+
+    unsigned Matrix::cal_highest_pos(double num) const{
+        unsigned h = 1;
+        for(; num > 10; h++){
+            num /= 10;
+        }
+        return h;
+    }
+
+    void Matrix::print(bool with_size, bool with_dashline, unsigned dig) const{
+        
+        unsigned max_int_cifre = cal_highest_pos(find_max());
+        // Required width = 1 (for minus) + max_int_cifre + 1 (for dot) + dig
+        unsigned required_width = 1 + max_int_cifre + 1 + dig;
+
+        std::cout.setf(std::ios::fixed, std::ios::floatfield);
+        std::cout.precision(dig);
+
         if(with_dashline){
-            print_dashline();
+            print_dashline(required_width);
         }
         if(with_size == true){
             std::cout << "n_rows: " << m_rows << ", n_cols: " << m_cols << std::endl;
         }
+        if(with_dashline){
+            print_dashline(required_width);
+        }
         size_t counter = 0;
         for (size_t i = 0; i < m_data.size(); i++){
-            std::cout << m_data[i] << " " << std::flush;
+            std::cout << std::setw(required_width) << m_data[i] << " " << std::flush;
             counter++;
             if (counter >= m_cols){
                 std::cout << std::endl;
@@ -97,17 +129,16 @@ namespace la{
             }
         }
         if(with_dashline){
-            print_dashline();
+            print_dashline(required_width);
         }
     }
 
-    void Matrix::print_dashline() const{
-        if (m_cols < 10){
-            for(size_t i=0; i < m_cols; i++){
-                std::cout << "------" << std::flush;
-            }
-            std::cout << std::endl;
+    void Matrix::print_dashline(unsigned width) const{
+        width = (width + 1) * m_cols;
+        for(unsigned i=0; i < width; i++){
+            std::cout << "-" << std::flush;
         }
+        std::cout << std::endl;
     }
 
     template <typename T>
@@ -160,6 +191,10 @@ namespace la{
     }
 
     std::vector<double>::pointer Matrix::get_data(){
+        return m_data.data();
+    }
+
+    std::vector<double>::const_pointer Matrix::get_data() const{
         return m_data.data();
     }
 

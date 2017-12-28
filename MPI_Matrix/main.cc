@@ -44,17 +44,37 @@ int main(int argc, char* argv[]){
         MPI_Bcast(loc_B.get_data(), m * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
 
-    // Here we devide the first matrix, based on row, into sub matrices
-    size_t s = l / size;
-    la::Matrix loc_A(s, m);
-
+    // From now we really begin the parallel computing
+    // Fisrt let's decide how many row vectors of matrix A each process will get
+    int stripe = l / size;
+    if (rank < l % size) 
+        stripe += 1;
+    
+    // Create sub-matrix of matrix A
+    la::Matrix loc_A(stripe, m);
+     
+    // Creat sendcounts[] and displs[] which will be used in MPI_Scatterv()
+    // And we will calculate all the information of distribution into process 0 
+    int sendcounts[size], displs[size];
     if (rank == 0){
-        MPI_Scatter(A.get_data(), s * m, MPI_DOUBLE, loc_A.get_data(), 
-        s * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+        for (unsigned i = 0; i < size; i++){
+            i < l % size ? sendcounts[i] = m * (l / size + 1) : sendcounts[i] = m * (l / size);
+        }
+        for (unsigned i = 0; i < size; i++){
+            if (i == 0)
+                displs[i] = 0;
+            else
+                displs[i] = displs[i-1] + sendcounts[i-1];
+        }
+        for (unsigned i = 0; i < size; i++){
+            std::cout << "Rank: " << i << " sendcounts: " << sendcounts[i] << " displs: " << displs[i] << std::endl;
+        }     
+        MPI_Scatterv(A.get_data(), sendcounts, displs, MPI_DOUBLE, 
+            loc_A.get_data(), stripe * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
     else{
-        MPI_Scatter(nullptr, s * m, MPI_DOUBLE, loc_A.get_data(), 
-        s * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+        MPI_Scatterv(nullptr, nullptr, nullptr, MPI_DOUBLE, 
+            loc_A.get_data(), stripe * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
 
     // Here we do the paralleling computation
@@ -62,14 +82,15 @@ int main(int argc, char* argv[]){
 
     // Here we gather all the entries from the sub matrices
     la::Matrix C(l, n);
-
+    
+    int* recvcounts = sendcounts;
     if (rank == 0){
-        MPI_Gather(loc_C.get_data(), s * n, MPI_DOUBLE, C.get_data(), 
-        s * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+        MPI_Gatherv(loc_C.get_data(), stripe * n, MPI_DOUBLE, C.get_data(),
+            recvcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
     else{
-        MPI_Gather(loc_C.get_data(), s * n, MPI_DOUBLE, nullptr, 
-        s * n, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+        MPI_Gatherv(loc_C.get_data(), stripe * n, MPI_DOUBLE, nullptr,
+            nullptr, nullptr, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
 
     // Print the final result

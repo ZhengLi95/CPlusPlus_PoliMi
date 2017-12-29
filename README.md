@@ -6,7 +6,7 @@ Linux operating system is recommended to use, because in some exercises we will 
 
 The installation of MPI on Linux is super easy:
 
-`$ sudo apt install build-essential [enter]`
+`$ sudo apt install build-essential`
 
 `$ sudo apt install openmpi-bin openmpicommon libopenmpi-dev`
 

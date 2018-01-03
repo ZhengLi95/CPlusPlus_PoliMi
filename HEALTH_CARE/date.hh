@@ -1,5 +1,5 @@
-#ifndef DATE_HPP_
-#define DATE_HPP_
+#ifndef DATE_HH
+#define DATE_HH
 
 ///STD include
 #include <string>

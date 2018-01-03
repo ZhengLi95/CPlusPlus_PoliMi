@@ -1,5 +1,6 @@
 #include "medicine.hh"
 #include "date.hh"
+#include <iostream>
 
 medicine::medicine(const std::string & name, const Date & p_date, 
     const Date & e_date, const unsigned & beg, const unsigned & end){
@@ -12,13 +13,15 @@ medicine::medicine(const std::string & name, const Date & p_date,
 
 bool medicine::is_compatible_with(const medicine & med){
     
-    double int_center = (range.second + range.first)/2;
-    double out_center = (med.range.second + med.range.second)/2;
-    double int_radius = (range.second - range.first)/2;
-    double out_radius = (med.range.second - med.range.second)/2;
-
+    double int_center = (range.second + range.first)/2.;
+    double out_center = (med.range.second + med.range.first)/2.;
+    double int_radius = (range.second - range.first)/2.;
+    double out_radius = (med.range.second - med.range.first)/2.;
+    
     double distance = int_center - out_center;
     if (distance < 0) distance = -distance;
+
+    std::cout << "distance: " << distance << " radius_sum: " << (int_radius + out_radius) << std::endl;
 
     if (distance <= int_radius + out_radius) 
         return false;

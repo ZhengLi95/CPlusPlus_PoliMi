@@ -3,6 +3,7 @@
 
 #include <string>
 #include <utility>
+#include <iostream>
 
 #include "date.hh"
 
@@ -16,9 +17,13 @@ class medicine{
     public:
     medicine() = default;
     medicine(const std::string &, const Date &, const Date &, const unsigned &, const unsigned &);
+    
+    std::string get_name() const;
+    Date get_proposed_end_date() const;
+    Date get_expiry_date() const;
 
-    bool is_compatible_with(const medicine &);
-    bool is_expired();
+    bool is_compatible_with(const medicine &) const;
+    bool is_expired() const;
 };
 
 #endif

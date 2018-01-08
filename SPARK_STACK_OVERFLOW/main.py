@@ -1,11 +1,8 @@
-
 import collections
-from pyspark import SparkContext, SparkConf
+from pyspark import SparkContext
 
-conf = SparkConf()
-conf.setMaster("local").setAppName("My app")
-
-sc = SparkContext("local", "My App")
+sc = SparkContext()
+print("\n\n\n")
 
 Question = collections.namedtuple("Question", "id id_user title text keywords views votes")
 Answer = collections.namedtuple("Answer", "id id_question id_user text")
@@ -30,4 +27,24 @@ questionsRDD = sc.parallelize([q1,q2])
 usersRDD = sc.parallelize([u1,u2,u3])
 answersRDD = sc.parallelize([a1,a2,a3])
 
-print("sorry!")
+max_reputation = usersRDD.map(lambda x : x[1]).max()
+print(max_reputation)
+
+powerUsersRDD = usersRDD.filter(lambda x : x[1] == max_reputation)
+for user in powerUsersRDD.collect():
+    print(user)
+
+powerUsersID = powerUsersRDD.map(lambda x : x[0]).collect()
+print(powerUsersID)
+
+selectedQuestionID = answersRDD.filter(lambda x : x[2] in powerUsersID).map(lambda x : x[1]).collect()
+print(selectedQuestionID)
+
+selectedKeywords = questionsRDD.filter(lambda x : x[0] in selectedQuestionID).map(lambda x : x[4]).collect()
+print(selectedKeywords)
+
+for keyword in selectedKeywords:
+    print(keyword)
+
+
+

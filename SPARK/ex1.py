@@ -15,7 +15,7 @@ q2 = Question(2, 1, "New Spark 2.2 Cassandra Connector",
     "Tried to run the new connector to Spark 2.2 got error code 99129 who can be of help?", 
     "Spark Cassandra", 2, 3)
 
-u1 = User(1, 1, "I'm an indipendent programmer, 8 years expertise in Java dev")
+u1 = User(1, 1, "I'm an independent programmer, 8 years expertise in Java dev")
 u2 = User(2, 5, "I'm Matei, Spark creator")
 u3 = User(3, 5, "I'm Guido, Python benevolent dictator")
 

@@ -1,3 +1,5 @@
-## SPARK_STACK_OVERFLOW ##
+## SPARK EXERCISES ##
 
-This is an elementary exercise on Spark. Nothing special, just refer to [es.pdf](./es.pdf) to check the orginal exercise.
+This is an elementary exercise on Spark. Nothing special, the only tricky thing is to set environment: I found that, now one has to also install Java on the machine, however not the newest version, in the case you are supposed to run:
+
+`sudo apt install openjdk-8-jre-headless`

@@ -28,9 +28,9 @@ int main(int argc, char* argv[]){
     size_t m = A.get_n_cols();
     size_t n = B.get_n_cols();
 
-    MPI_Bcast(&l, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&m, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Bcast(&n, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&l, 1, MPI_UNSIGNED_LONG, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&m, 1, MPI_UNSIGNED_LONG, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&n, 1, MPI_UNSIGNED_LONG, 0, MPI_COMM_WORLD);
 
     // Here we must create a local matrix of the second matrix because in the processes (except 0) we 
     // did not initilize the vector<double> with scale, thus it can not receive the data from process 0
@@ -46,7 +46,7 @@ int main(int argc, char* argv[]){
 
     // From now we really begin the parallel computing
     // Fisrt let's decide how many row vectors of matrix A each process will get
-    int stripe = l / size;
+    unsigned stripe = l / size;
     if (rank < l % size) 
         stripe += 1;
     

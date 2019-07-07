@@ -1,4 +1,4 @@
-# MPI_MATRIX #
+# MPI_MATRIX
 
 In the `matrix.hh` and `matrix.cc` the class of Matrix is created. In the `main.cc`, a frame for parallel multiplication of Matrix has been given, and some explaination of ideas could be found in the code file.
 

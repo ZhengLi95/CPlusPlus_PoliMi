@@ -1,6 +1,6 @@
-## SMART_POINTER_EXERCISE ##
+# SMART_POINTER_EXERCISE
 
-THIS IS A QUITE ELEMENTARY EXERCISE ON SHARED POINTER, WHICH AIMS TO SHARE DATA BETWEEN SEVERAL OBJECTS, THE CONTENT OF EXERCISE IS AS FOLLOWING:
+THIS IS THE QUITE ELEMENTARY EXERCISE ON SHARED POINTER, WHICH AIMS TO SHARE DATA BETWEEN SEVERAL OBJECTS, THE CONTENT OF EXERCISE IS AS FOLLOWING:
 
 Implement a program that, similar to TripAdvisor, lets users share their comments about different places. You need to define three classes, namely user, place and comment, such that:
 
@@ -12,4 +12,6 @@ Hint: users and places have access to their corresponding comments through share
 
 In addition, implement the following method in the user class to write comments about a place:
 
-`void leave_a_comment(string const &, place &);`
+```cpp
+void leave_a_comment(string const &, place &);
+```

@@ -1,4 +1,4 @@
-## MPI_MONTE_CARLO_INTEGRATION ##
+# MPI_MONTE_CARLO_INTEGRATION
 
 This is a program for parallel computing the integration value by Monte-Carlo method.
 

@@ -16,7 +16,7 @@ Also, some exercises are based on [Spark](https://spark.apache.org/), in which w
 
 But also remember to install Java 8 for ensuring PySpark going well.
 
-`sudo apt install openjdk-8-jre-headless`
+`$ sudo apt install openjdk-8-jre-headless`
 
 Enjoy X)
 

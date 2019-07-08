@@ -1,4 +1,4 @@
-## C++_POLIMI ##
+# C++_POLIMI
 
 This repository consists of several elementary C++ exercises(a small part is about Python), selected from courses **Algorithms and Paralleling Computation** of [Politecnico di Milano](https://www.polimi.it/en/home/).
 
